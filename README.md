@@ -1,35 +1,71 @@
-pelican-path-metadata: A Plugin for Pelican
-====================================================
+# pelican-cleanurl plugin
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/pelican-path-metadata/main.yml?branch=main)](https://github.com/pelican-plugins/pelican-path-metadata/actions)
-[![PyPI Version](https://img.shields.io/pypi/v/pelican-pelican-path-metadata)](https://pypi.org/project/pelican-pelican-path-metadata/)
-![License](https://img.shields.io/pypi/l/pelican-pelican-path-metadata?color=blue)
+A python [pelican](https://github.com/getpelican/pelican) plugin
+that creates clean urls for a page-based site.
 
-A pelican plugin to add path metadata
+For instance:
 
-Installation
-------------
+```
+**Filename**                                 **URL**                                 **Output File**
+pages/index.md                           ==> /                                    ==> index.html
+pages/error.md                           ==> /error.html                          ==> error.html
+pages/folder1/index.md                   ==> /folder1                             ==> folder1/index.html
+pages/folder1/contents1.html             ==> /folder1/contents1                   ==> folder1/contents1/index.html
+pages/folder1/contents2.html             ==> /folder1/contents2                   ==> folder1/contents2/index.html
+pages/folder1/folder2/index.html         ==> /folder1/folder2                     ==> folder1/folder2/index.html
+pages/folder1/folder2/contents1.html     ==> /folder1/folder2/contents1           ==> folder1/folder2/contents1/index.html
+pages/folder1/folder2/contents2.html     ==> /folder1/folder2/contents2           ==> folder1/folder2/contents2/index.html
+```
 
-This plugin can be installed via:
+## Installation
 
-    python -m pip install pelican-pelican-path-metadata
+`pip install git+https://github.com/rr326/pelican-cleanurl.git`
 
-Usage
------
 
-<<Add plugin details here>>
+## Simple Usage (tested)
 
-Contributing
-------------
+```
+# pelicanconf.py
+PLUGINS=['pelican_cleanurl']
+PAGE_URL = '{cleanurl}'
+PAGE_SAVE_AS = '{cleanurl_saveas}'
+INDEX_SAVE_AS = 'sitemap.html' # Otherwise it will conflict with your own index.html
+```
 
-Contributions are welcome and much appreciated. Every little bit helps. You can contribute by improving the documentation, adding missing features, and fixing bugs. You can also help out by reviewing and commenting on [existing issues][].
+## Sample Dir Structure
 
-To start contributing to this plugin, review the [Contributing to Pelican][] documentation, beginning with the **Contributing Code** section.
+```
+pages
+    /index.md
+    /error.md
+    /file1.md
+    /folder1
+        /index.md
+        /contents1.html
+        /contents2.html
+        /folder2
+            /index.html
+            /contents1.html
+            /contents2.html
+```
 
-[existing issues]: https://github.com/pelican-plugins/pelican-path-metadata/issues
-[Contributing to Pelican]: https://docs.getpelican.com/en/latest/contribute.html
+This will create a "clean" url structure such as:
 
-License
--------
+```
+/ <-- index.html
+/error.html # <-- This is a special page
+/file <-- root level file
+/folder1 <- folder1/index.html
+/folder1/contents1
+...
+```
+
+## Other features
+
+I put a bunch of other hooks in the code, but I didn't test them.
+I'm not going to work on them because I don't know if anyone else other
+than I will use this repo.
+
+## License
 
 This project is licensed under the MIT license.

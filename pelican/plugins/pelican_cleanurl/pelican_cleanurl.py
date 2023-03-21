@@ -111,7 +111,7 @@ def add_metadata(page: contents.Page):
         page.relative_source_path,
     )
 
-    log.warning(f"{page.relative_source_path:40} ==> {cleanurl:35} ==> {cleanurl_saveas}")
+    log.debug(f"cleanurl: {page.relative_source_path:40} ==> {cleanurl:35} ==> {cleanurl_saveas}")
 
     page.metadata['cleanurl'] = cleanurl
     page.metadata['cleanurl_saveas'] = cleanurl_saveas
